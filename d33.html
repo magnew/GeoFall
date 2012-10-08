@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>D32</title>
+    
+    <script type="text/javascript" src="d3/d3.v2.js"></script>
+    
+  <style>
+    #vis { background: steelblue; }
+  </style>
+
+  </head>
+  <body>
+
+     <svg id="vis" height="700" width="1000">
+     
+  </svg>
+  	<script type="text/javascript">
+
+  		var w = 600;
+  		var h = 600;
+  		var rad = 15;
+
+    	var dataset =  []
+    	for (var i = 0; i < 100; i++) {
+    		var newNumber = Math.random() * rad + 2;
+    		dataset = dataset.concat(newNumber);
+    	}
+
+
+      var v2 = d3.selectAll("svg");
+
+      var offset = 20
+      v2.selectAll("circle")
+        .data(dataset)
+        .enter()
+        .append("circle")
+        .attr("fill",function(d) {
+          var color = Math.round( d * 10 + 50);
+        return "rgb(0, 0, " + color + ")";})
+        .style("stroke", "black")
+        .attr("cx", function(d){ return Math.random()*(w - rad*2) + rad; })
+        .attr("cy", function(d){ return Math.random()*(h - rad*2) + rad; })
+        .attr("r", function(d){ return d;});  
+
+    </script>
+
+  
+
+</body>
+</html>

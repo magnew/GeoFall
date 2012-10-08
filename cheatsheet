@@ -1,0 +1,5 @@
+#foo        // <any id="foo">
+foo         // <foo>
+.foo        // <any class="foo">
+[foo=bar]   // <any foo="bar">
+foo bar     // <foo><bar></foo>

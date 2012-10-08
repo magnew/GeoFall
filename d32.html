@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>D32</title>
+    
+    <script type="text/javascript" src="d3/d3.v2.js"></script>
+    
+  <style>
+    #vis { background: steelblue; }
+  </style>
+
+  </head>
+  <body>
+  	
+
+  <svg id="vis" height="700" width="1000">
+	</svg>
+
+  <script type="text/javascript">
+
+
+    var rrad = function(){ return Math.random() * 20 + 5 };
+    var rx =  function(){ return Math.random() * 1000 };
+    var ry =  function(){ return Math.random() * 700 };
+    var rc = function(min, max){return Math.round(min+ Math.random()*max)};
+    var num =  Math.random() * 1000;
+
+    var colorScale = d3.scale.linear()
+        .domain([0, 255])
+        .range(["white", "blue"])
+        .interpolate(d3.interpolateRgb);
+
+    data = [];
+    for (var i = 0; i < num; i++) {
+      
+      data[i]={'val': rrad(), x : rx(), y : ry(), color:rc(100,255)  };
+    }
+
+    function x(d) { return d.x; }
+    function y(d) { return d.y; }
+    function val(d) { return d.val; }
+    function color(d) {return colorScale(d.color)}
+
+    var vis = d3.select("#vis");
+
+    vis.selectAll("circle")
+        .data(data)
+      .enter().append("circle")
+        .attr("cx", x)
+        .attr("cy", y)
+        .attr("r", val)
+        .attr("stroke", "gray")
+        .attr("fill", color);
+
+    </script>
+
+</body>
+</html>
