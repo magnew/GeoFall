@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>D33</title>
+    <title>D34</title>
     
     <script type="text/javascript" src="d3/d3.v2.js"></script>
     
@@ -56,15 +56,14 @@
       vis.append("circle")
           .attr("cx", m[0])
           .attr("cy", m[1])
-          .attr("r", 1e-6)
+          .attr("r", 0)
           .style("stroke", "white")
           .style("stroke-opacity", 1)
       .transition()
           .duration(2000)
           .ease(Math.sqrt)
-          .attr("r", 100)
-          .style("stroke-opacity", 1e-6)
-          .remove();
+          .attr("r", 50)
+          .style("stroke-opacity", .15);
     }
 
     </script>
