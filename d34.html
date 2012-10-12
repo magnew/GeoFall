@@ -27,12 +27,13 @@
     var z = d3.scale.category20c(),
     i = 0;
 
-
     var rrad = function(){ return Math.random() * 20 + 5 };
     var rx =  function(){ return Math.random() * 1000 };
     var ry =  function(){ return Math.random() * 700 };
     var rc = function(min, max){return Math.round(min+ Math.random()*max)};
     var num =  Math.random() * 1000;
+
+    var mouseD = "false"
 
     var colorScale = d3.scale.linear()
         .domain([0, 255])
@@ -47,23 +48,49 @@
 
     var vis = d3.select("#vis")
         .style("pointer-events", "all")
-        .on("mousemove", addCircle);
+        .on("mousemove", addCircle)
+        .on("mousedown", md)
+        .on("mouseup", mu);
+
+
+    function md(){  
+      mouseD = "true";
+        
+    }
+    function mu(){
+      mouseD = "false";
+      console.log("thing");
+    }
 
     function addCircle(){
-
       var m = d3.svg.mouse(this);
-
-      vis.append("circle")
-          .attr("cx", m[0])
-          .attr("cy", m[1])
-          .attr("r", 0)
-          .style("stroke", "white")
-          .style("stroke-opacity", 1)
-      .transition()
-          .duration(2000)
-          .ease(Math.sqrt)
-          .attr("r", 50)
-          .style("stroke-opacity", .15);
+      if(mouseD === "true"){
+          vis.append("circle")
+              .attr("cx", m[0])
+              .attr("cy", m[1])
+              .attr("r", 0)
+              .style("stroke", "white")
+              .style("stroke-opacity", 1)
+          .transition()
+              .duration(1000)
+              .ease(Math.sqrt)
+              .attr("r", 50)
+              .style("stroke-opacity", .15);
+        }
+        else{
+          vis.append("circle")
+              .attr("cx", m[0])
+              .attr("cy", m[1])
+              .attr("r", 0)
+              .style("stroke", "white")
+              .style("stroke-opacity", .5)
+          .transition()
+              .duration(500)
+              .ease(Math.sqrt)
+              .attr("r", 10)
+              .style("stroke-opacity", 0)
+              .remove();
+        }
     }
 
     </script>
