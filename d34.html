@@ -33,7 +33,7 @@
     var rc = function(min, max){return Math.round(min+ Math.random()*max)};
     var num =  Math.random() * 1000;
 
-    var mouseD = "false"
+    var mouseD = false;
 
     var colorScale = d3.scale.linear()
         .domain([0, 255])
@@ -54,17 +54,16 @@
 
 
     function md(){  
-      mouseD = "true";
+      mouseD = true;
         
     }
     function mu(){
-      mouseD = "false";
-      console.log("thing");
+      mouseD = false;
     }
 
     function addCircle(){
       var m = d3.svg.mouse(this);
-      if(mouseD === "true"){
+      if(mouseD){
           vis.append("circle")
               .attr("cx", m[0])
               .attr("cy", m[1])

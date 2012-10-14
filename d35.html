@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>D35</title>
+    
+    <script type="text/javascript" src="d3/d3.v2.js"></script>
+    
+  <style>
+    #vis { background: black; }
+  </style>
+
+  </head>
+  <body>
+    
+
+  <svg id="vis" height="700" width="1000">
+
+  </svg>
+
+  <script type="text/javascript">
+
+    var vis = d3.select("#vis");
+
+    var colorScale = d3.scale.linear()
+        .domain([0, 255])
+        .range(["white", "blue"])
+        .interpolate(d3.interpolateRgb);
+
+    var rrad = function(){ return Math.random() * 20 + 5 };
+    var rx =  function(){ return Math.random() * 1000 };
+    var ry =  function(){ return Math.random() * 700 };
+    var rc = function(min, max){return Math.round(min+ Math.random()*max)};
+    var num =  Math.random() * 1000;
+ 
+    data = [];
+    for (var i = 0; i < num; i++) {
+      
+      data[i]={'id': i, 'val': rrad(), x : rx(), y : ry(), color:rc(100,255)  };
+    }
+
+    function x(d) { return d.x; }
+    function y(d) { return d.y; }
+    function val(d) { return d.val; }
+    function color(d) {return colorScale(d.color)}
+    function key(d) {return d.id}
+
+    function randomize(){
+      
+
+      for(var i = 0; i<data.length;i++){
+        
+        data[i].val = rrad();
+        if(Math.random()*100 < 10){
+          data.splice(i,1);
+        }
+        if(Math.random()*100 < 10){
+          data.push({'id': i, 'val': rrad(), x : rx(), y : ry(), color:rc(100,255)  });
+        }
+      }
+
+
+
+      vis.selectAll("circle")
+       .data(data, key)
+      .enter().append("circle")
+        .attr("cx", x)
+        .attr("cy", y)
+        .attr("r", 0)
+        .attr("stroke", "deepskyblue")
+        .style("stroke-width", 3)
+        .attr("fill", color);
+
+      vis.selectAll("circle")
+        .data(data, key)
+      .transition()
+        .duration(1000)
+        .attr("cx", x)
+        .attr("cy", y)
+        .attr("r", val)
+        .attr("stroke", "white")
+        .style("stroke-width", 1)
+        .attr("fill", color);
+
+      vis.selectAll("circle")
+        .data(data, key)
+        .exit()
+        .transition()
+          .duration(500)
+          .style("fill-opacity", 0)
+          .style("stroke-opacity", 0)
+          .remove();
+
+    }
+
+    randomize();
+
+    setInterval(randomize, 2000);
+    </script>
+
+</body>
+</html>
